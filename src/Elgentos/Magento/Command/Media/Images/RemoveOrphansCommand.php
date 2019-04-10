@@ -56,6 +56,14 @@ class RemoveOrphansCommand extends AbstractCommand
         $this->_showStats($filesToRemove['stats'], $output);
 
         if ($dryRun) {
+            $fp = fopen('toremove.csv', 'wb');
+
+            foreach ($filesToRemove['files'] as $fields) {
+                fputcsv($fp, array($fields));
+            }
+
+            fclose($fp);
+
             return 0;
         }
 
